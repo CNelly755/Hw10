@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Was my uncle right? New England snowfall, then and now</title>
+<meta name="description" content="Did New England get less snow in 2001-2020 than in 1941-2000? An analysis of NOAA GHCN-Daily station records.">
+<style>
+  :root {
+    --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --rule: #e4e3df;
+    --base: #2a78d6; --recent: #eb6834; --yes: #e34948; --no: #2a78d6;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink);
+         font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+  h1 { font-size: 2.1rem; line-height: 1.2; margin: 0 0 8px; letter-spacing: -0.01em; }
+  h2 { font-size: 1.35rem; margin: 56px 0 12px; padding-top: 16px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 1.05rem; margin: 28px 0 8px; }
+  p, li { color: var(--ink); }
+  .lede { color: var(--ink-2); font-size: 1.1rem; margin: 0 0 32px; }
+  .answer { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px;
+            padding: 28px 32px; display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; }
+  .answer .word { font-size: 4.2rem; font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+  .answer .word.yes { color: var(--yes); } .answer .word.no { color: var(--no); }
+  .answer p { margin: 0; font-size: 1.1rem; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin: 20px 0 0; }
+  .tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 16px 18px; }
+  .tile .k { font-size: 0.82rem; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.04em; }
+  .tile .v { font-size: 1.7rem; font-weight: 700; margin-top: 4px; }
+  .tile .s { font-size: 0.85rem; color: var(--ink-2); }
+  figure { margin: 24px 0; background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 14px; }
+  figure img { width: 100%; height: auto; display: block; }
+  figcaption { color: var(--ink-2); font-size: 0.92rem; margin-top: 10px; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; background: var(--surface); }
+  th, td { padding: 8px 10px; border-bottom: 1px solid var(--rule); text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--ink-2); font-weight: 600; }
+  .scroll { overflow-x: auto; }
+  details { margin: 16px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  code { background: #efeee9; padding: 1px 5px; border-radius: 4px; font-size: 0.9em; }
+  footer { margin-top: 64px; color: var(--ink-2); font-size: 0.88rem; }
+  a { color: #1c5fae; }
+  @media (max-width: 600px) { .answer { grid-template-columns: 1fr; } .answer .word { font-size: 3.2rem; } }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Was my uncle right about the snow?</h1>
+<p class="lede">My uncle (1939&ndash;2024) lived most of his life in New England and often said there was less snow
+nowadays than there used to be. Here I test that claim with NOAA weather-station records, comparing the winters of
+{{RECENT}} with the winters of {{BASELINE}}.</p>
+
+<div class="answer">
+  <div class="word {{HEADLINE_CLASS}}">{{HEADLINE}}</div>
+  <p>{{HEADLINE_SENTENCE}}</p>
+</div>
+
+<div class="tiles">{{TILES}}</div>
+
+<h2>The short version</h2>
+{{SUMMARY}}
+
+<h2>What the snowfall record shows</h2>
+<figure>
+  <img src="figures/regional_snowfall_in.png" alt="Bar chart of seasonal snowfall at a typical New England station for each winter, with period averages for {{BASELINE}} and {{RECENT}}.">
+  <figcaption>{{FIG_REGIONAL_CAPTION}}</figcaption>
+</figure>
+{{REGIONAL_TEXT}}
+
+<figure>
+  <img src="figures/distributions.png" alt="Box plots comparing every winter's regional value in the two periods for each snow measure.">
+  <figcaption>Each dot is one winter's regional average (stations combined). If the two periods were very different,
+  the boxes would barely overlap. The diamond marks the period mean.</figcaption>
+</figure>
+
+<h2>Station by station</h2>
+<p>A regional average can hide a mixed picture, so I also checked each station on its own.</p>
+<figure>
+  <img src="figures/stations_snowfall.png" alt="Dot plot of the percent change in average seasonal snowfall at each station.">
+  <figcaption>{{FIG_STATIONS_CAPTION}}</figcaption>
+</figure>
+{{STATION_TEXT}}
+
+<h2>Maybe he meant something else by &ldquo;less snow&rdquo;</h2>
+<p>&ldquo;Less snow&rdquo; can mean less snow falling, fewer snowy days, or less time with snow on the ground.
+Those can move differently: a warmer winter can bring the same total snowfall but melt it faster. So I tested
+all three, using the same stations-and-seasons rules.</p>
+<div class="scroll">{{METRIC_TABLE}}</div>
+<figure>
+  <img src="figures/decades.png" alt="Bar charts of decade-average departures from the 1941-2000 normal for three snow measures.">
+  <figcaption>Decade averages, as a percent above (blue) or below (red) each station's own 1941&ndash;2000 average.
+  Decades are labeled by winter: &ldquo;1940s&rdquo; is the winters of 1940&ndash;41 through 1949&ndash;50, and the last bar covers the winters since 2020&ndash;21.</figcaption>
+</figure>
+{{OTHER_METRICS_TEXT}}
+
+{{EXTRA_FIGURES}}
+
+<h2>Does the answer depend on how I framed it?</h2>
+<p>The comparison periods were fixed by the question, but a fair check is whether a different reasonable
+framing would flip the answer. Each row compares the regional seasonal snowfall index between two periods.</p>
+<div class="scroll">{{SENSITIVITY_TABLE}}</div>
+{{SENSITIVITY_TEXT}}
+
+<h2>How I did it</h2>
+<ol>
+  <li><strong>Data.</strong> Daily snowfall (<code>SNOW</code>) and snow depth (<code>SNWD</code>) from NOAA's
+  <a href="https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily">Global Historical Climatology Network &ndash; Daily</a>
+  (GHCN-Daily), downloaded {{RUN_DATE}}. Values that failed NOAA's quality checks were dropped.</li>
+  <li><strong>Stations.</strong> Every station in Connecticut, Massachusetts, Maine, New Hampshire, Rhode Island and
+  Vermont whose snowfall record begins by 1945 and runs to at least 2020 ({{N_CANDIDATES}} candidates).
+  A station was kept for a measure only if at least 75% of its winters in <em>each</em> period were complete,
+  which left {{N_STATIONS}} stations for snowfall.</li>
+  <li><strong>Winters.</strong> A winter runs July 1 to June 30 and is named for the year of its January, so
+  &ldquo;2001&rdquo; is the 2000&ndash;01 winter. A winter counts only if November through March each have at least
+  25 days of valid observations.</li>
+  <li><strong>Measures.</strong> Total seasonal snowfall; days with 1&Prime; or more of new snow; and days from
+  November to March with at least 1&Prime; of snow on the ground (scaled up for the few missing days).</li>
+  <li><strong>Regional index.</strong> Snowy hill towns and the coast get very different amounts, so each station's
+  winter is expressed as a percent above or below <em>that station's</em> 1941&ndash;2000 average, then averaged
+  across stations. That keeps a handful of snowy stations from dominating, and stops the result from shifting just
+  because a station is missing a winter. For readability the index is also shown in inches for a
+  &ldquo;typical&rdquo; station (the average station's 1941&ndash;2000 normal of {{TYPICAL_NORMAL}} inches).</li>
+  <li><strong>Tests.</strong> The headline rule was set before running the analysis: <em>Yes</em> if the
+  {{RECENT}} regional average is lower than the {{BASELINE}} average and a one-sided permutation test (20,000
+  random reshufflings of winters between the two periods) gives p &lt; 0.05; otherwise <em>No</em>. I also report a
+  bootstrap 95% confidence interval, a Mann&ndash;Whitney test, per-station Welch t-tests, and a sign test on how
+  many stations went down.</li>
+</ol>
+
+<h2>Caveats</h2>
+<ul>
+  <li><strong>Snowfall is a hard thing to measure.</strong> It depends on how often the observer clears the board, wind,
+  and whether the gauge moved. Most of these stations are volunteer cooperative observers, and station moves are
+  not corrected for in the raw daily data.</li>
+  <li><strong>Stations are not independent.</strong> Neighboring stations see the same storms, so the station counts
+  overstate how much independent evidence there is. The headline test therefore uses the regional series, where
+  each winter is one data point.</li>
+  <li><strong>Twenty winters is a short window.</strong> New England snowfall swings a lot from year to year (a single
+  big nor'easter can make a season), so modest real changes can be hard to separate from noise.</li>
+  <li><strong>Memory is not a rain gauge.</strong> Snow looks deeper when you are small, and the winters people remember
+  best are the extreme ones. The data can say what happened on average, not what a person experienced at any one place.</li>
+</ul>
+
+<h2>Reproduce it</h2>
+<p>All code is in the <a href="{{REPO_URL}}">GitHub repository</a>. With Python 3.10+:</p>
+<pre><code>pip install -r requirements.txt
+python run_all.py</code></pre>
+<p>This downloads about {{N_CANDIDATES}} station files from NOAA, runs the analysis, and writes this page to
+<code>site/</code>. The repository's GitHub Actions workflow does the same thing on every push and publishes the
+result here.</p>
+
+<details>
+  <summary>All {{N_STATIONS}} snowfall stations used</summary>
+  <div class="scroll">{{STATION_TABLE}}</div>
+</details>
+
+<footer>
+  Data: NOAA National Centers for Environmental Information, GHCN-Daily (Menne et al. 2012,
+  doi:<a href="https://doi.org/10.7289/V5D21VHZ">10.7289/V5D21VHZ</a>). Latest winter in the data: {{LATEST_SEASON}}.
+  Page generated {{RUN_DATE}}.
+</footer>
+
+</main>
+</body>
+</html>
