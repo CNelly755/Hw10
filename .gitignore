@@ -1,0 +1,31 @@
+# Downloaded NOAA data (hundreds of MB) - never commit
+data/
+*.dly
+ghcnd-*.txt
+*.csv.gz
+*.tar.gz
+
+# Generated analysis output and the built website (rebuilt by run_all.py / GitHub Actions)
+output/
+site/
+
+# Synthetic test data
+tests/_fixture/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# R (in case you add R scripts)
+.Rhistory
+.RData
+.Rproj.user/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
