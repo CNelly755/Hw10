@@ -38,7 +38,10 @@ jobs:
       - name: Download data, analyze, build report
         run: python run_all.py
 
-     
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
 
   deploy:
     needs: build
