@@ -133,7 +133,8 @@ def station_seasons(station_id: str) -> pd.DataFrame:
             {
                 season: (pd.Timestamp(season, 4, 1) - pd.Timestamp(season - 1, 11, 1)).days
                 for season in frac.index
-            }
+            },
+            dtype=float,
         )
         frames.append((frac * n_days).rename("snow_cover_days").to_frame())
 
@@ -432,6 +433,8 @@ def main() -> int:
     for m in METRICS:
         if m not in seasons:
             seasons[m] = np.nan
+        seasons[m] = pd.to_numeric(seasons[m], errors="coerce").astype(float)
+    seasons["season"] = seasons["season"].astype(int)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     FIG_DIR.mkdir(parents=True, exist_ok=True)
